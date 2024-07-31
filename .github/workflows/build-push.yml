@@ -1,0 +1,40 @@
+name: Build and Push
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Cog
+        uses: replicate/setup-cog@v2
+        with:
+          token: ${{ secrets.REPLICATE_API_TOKEN }}
+          install-cuda: true
+      
+      - name: Install Hugging Face CLI
+        run: pip install huggingface_hub
+  
+      - name: Download model files
+        env:
+          HF_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+        run: |
+          huggingface-cli download sciphi/triplex@d3c3a297391cb5609ff7f5350c426ed0908112da \
+             --token $HF_TOKEN \
+             --local-dir ./ \
+             --include="*.json" \
+             --include="*.safetensors" \
+             --include="*.gguf" \
+             --include="*.model" \
+             --include=".gitattributes"
+
+      - name: Build
+        run: cog build
+      
+      - name: Push to Replicate
+        run: cog push r8.im/patrickjm/schiphi-triplex
