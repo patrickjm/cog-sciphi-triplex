@@ -14,34 +14,34 @@ jobs:
 
       # Broken - waiting on https://github.com/replicate/setup-cog/pull/43
       # Replacing with manual steps
-      # - name: Setup Cog
-      #   uses: replicate/setup-cog@v2
-      #   with:
-      #     token: ${{ secrets.REPLICATE_API_TOKEN }}
-      #     install-cuda: true
-      ##########################################################
-      - name: Set up Docker buildx
-        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
-        with:
-          driver: "docker"
-  
-      - name: Install NVIDIA CUDA Toolkit
-        uses: Jimver/cuda-toolkit@c569a95f0d4b94657205f07567f6a55aeedf9974 # v0.2.16
-
       - name: Setup Cog
-        shell: bash
-        run: |
-          sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/download/v0.9.8/cog_Linux_x86_64
-          sudo chmod +x /usr/local/bin/cog
-          cog --version
+        uses: replicate/setup-cog@v1.0.4
+        with:
+          token: ${{ secrets.REPLICATE_API_TOKEN }}
+          install-cuda: true
+      ##########################################################
+      # - name: Set up Docker buildx
+      #   uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
+      #   with:
+      #     driver: "docker"
+  
+      # - name: Install NVIDIA CUDA Toolkit
+      #   uses: Jimver/cuda-toolkit@c569a95f0d4b94657205f07567f6a55aeedf9974 # v0.2.16
 
-      - name: Log in to Replicate
-        shell: bash
-        env:
-          REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
-        run: |
-          echo "Found REPLICATE_API_TOKEN in the environment; Authenticating..."
-          echo $REPLICATE_API_TOKEN | cog login --token-stdin
+      # - name: Setup Cog
+      #   shell: bash
+      #   run: |
+      #     sudo curl -o /usr/local/bin/cog -L https://github.com/replicate/cog/releases/download/v0.9.8/cog_Linux_x86_64
+      #     sudo chmod +x /usr/local/bin/cog
+      #     cog --version
+
+      # - name: Log in to Replicate
+      #   shell: bash
+      #   env:
+      #     REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
+      #   run: |
+      #     echo "Found REPLICATE_API_TOKEN in the environment; Authenticating..."
+      #     echo $REPLICATE_API_TOKEN | cog login --token-stdin
       
       ##########################################################
       
