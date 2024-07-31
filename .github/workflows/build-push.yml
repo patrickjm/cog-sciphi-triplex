@@ -52,7 +52,8 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
-          huggingface-cli download sciphi/triplex@d3c3a297391cb5609ff7f5350c426ed0908112da \
+          huggingface-cli download sciphi/triplex \
+             --revision d3c3a297391cb5609ff7f5350c426ed0908112da \
              --token $HF_TOKEN \
              --local-dir ./ \
              --include="*.json" \
