@@ -1,0 +1,7 @@
+.env
+*.json
+*.safetensors
+*.gguf
+*.model
+.cache
+.cog
