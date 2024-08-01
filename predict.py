@@ -3,11 +3,25 @@ from typing import List
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from cog import BasePredictor, Input
+import os
 
 class Predictor(BasePredictor):
     def setup(self):
-        self.model = AutoModelForCausalLM.from_pretrained("sciphi/triplex", trust_remote_code=True).to('cuda').eval()
-        self.tokenizer = AutoTokenizer.from_pretrained("sciphi/triplex", trust_remote_code=True)
+        model_path = "./checkpoints"
+        tokenizer_path = "./checkpoints"
+
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            device_map="auto",
+            trust_remote_code=True,
+            local_files_only=True
+        ).eval()
+
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            tokenizer_path,
+            trust_remote_code=True,
+            local_files_only=True
+        )
 
     def predict(
         self,
@@ -34,6 +48,6 @@ class Predictor(BasePredictor):
         )
 
         messages = [{'role': 'user', 'content': message}]
-        input_ids = self.tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt").to("cuda")
+        input_ids = self.tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt").to(self.model.device)
         output = self.tokenizer.decode(self.model.generate(input_ids=input_ids, max_length=2048)[0], skip_special_tokens=True)
         return output

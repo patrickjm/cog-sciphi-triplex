@@ -11,4 +11,11 @@ Note: This guide written for Mac OS - others might take some phenaigling
 ## Building & Pushing
 1. `cp .env.example .env`
 2. Fill in the `.env` file with your credentials
-3. Run `script/download-weights.sh`
+3. Run: 
+  ```bash
+  source .env
+  script/download-weights.sh
+  echo $REPLICATE_TOKEN | cog login --token-stdin
+
+  cog push r8.im/YOUR_ORG/YOUR_REPO --separate-weights
+  ```
