@@ -4,5 +4,4 @@ build:
   python_packages:
     - "torch==2.0.1"
     - "transformers==4.31.0"
-
 predict: "predict.py:Predictor"

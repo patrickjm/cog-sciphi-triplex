@@ -1,22 +1,18 @@
 import json
 from typing import List
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from cog import BasePredictor, Input
 import os
 
 class Predictor(BasePredictor):
     def setup(self):
-        # Paths to local files
-        model_path = "./checkpoints"
-
-        # Load the configuration
-        config = AutoConfig.from_pretrained(model_path, trust_remote_code=True, local_files_only=True)
+        # Path to local files
+        model_path = "./"
 
         # Load the model from local files
         self.model = AutoModelForCausalLM.from_pretrained(
             model_path,
-            config=config,
             device_map="auto",
             trust_remote_code=True,
             local_files_only=True

@@ -17,5 +17,5 @@ Note: This guide written for Mac OS - others might take some phenaigling
   script/download-weights.sh
   echo $REPLICATE_TOKEN | cog login --token-stdin
 
-  cog push r8.im/YOUR_ORG/YOUR_REPO --separate-weights
+  cog push r8.im/YOUR_ORG/YOUR_REPO
   ```

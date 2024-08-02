@@ -9,7 +9,7 @@ download_weights() {
   huggingface-cli download sciphi/triplex \
     --revision d3c3a297391cb5609ff7f5350c426ed0908112da \
     --token $HUGGINGFACE_TOKEN \
-    --local-dir ./checkpoints \
+    --local-dir ./ \
     --include="*.$include"
 }
 
