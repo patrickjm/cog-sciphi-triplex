@@ -7,3 +7,5 @@
 .cog
 checkpoints
 *.cog.*
+weights/*.py
+__pycache__
