@@ -23,5 +23,8 @@ download_weights "sciphi/triplex" "$triplex_revision" "safetensors"
 download_weights "sciphi/triplex" "$triplex_revision" "model"
 download_weights "microsoft/Phi-3-mini-128k-instruct" "$ms_phi_revision" "py"
 
+# Replace instances of "microsoft/Phi-3-mini-128k-instruct--" with "" in config.json
+sed -i '' 's/microsoft\/Phi-3-mini-128k-instruct--//g' ./weights/config.json
+
 
 echo "Done!"
